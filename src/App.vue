@@ -38,6 +38,7 @@ export default {
         description: "",
         done: false,
       }],
+      copy: [],
     };
   },
   mounted() {
@@ -53,15 +54,19 @@ export default {
       localStorage.setItem("todoItems", JSON.stringify(this.todoItems));
     },
     updateItem({ index, title, description, done }) {
-      this.todoItems[index] = {
+      this.copy = JSON.parse(JSON.stringify(this.todoItems));
+      this.copy[index] = {
         title,
         description,
         done,
       };
+      this.todoItems = this.copy;
       localStorage.setItem("todoItems", JSON.stringify(this.todoItems));
     },
     deleteItem(index) {
-      this.todoItems.splice(index, 1);
+      this.copy = JSON.parse(JSON.stringify(this.todoItems));
+      this.copy.splice(index, 1);
+      this.todoItems = this.copy;
       localStorage.setItem("todoItems", JSON.stringify(this.todoItems));
     },
   },
