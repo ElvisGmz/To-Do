@@ -1,8 +1,9 @@
 <template>
   <Header @add="newItem" />
-  <main class="w-full px-4 sm:px-6 md:px-8 py-8 flex flex-col items-center">
+  <main class="font-averia w-full px-4 sm:px-6 md:px-8 flex flex-col items-center max-h-screen-nav overflow-y-auto">
     <section
-      class="w-full max-w-screen-md space-y-4 space-y-reverse flex flex-col-reverse"
+      v-show="todoItems.length >= 1"
+      class="w-full max-w-screen-md space-y-4 space-y-reverse flex flex-col-reverse py-8"
     >
       <Item
         v-for="(item, index) in todoItems"
@@ -12,14 +13,19 @@
         @contentChange="updateItem"
         @deleteItem="deleteItem"
       />
-      <section
-        v-if="todoItems.length === 0"
-        class="w-full text-gray-700 max-w-screen-md flex flex-col items-center justify-center text-center py-16"
-      >
-        <h1>This is a list of things I need to do.</h1>
-        <p>Add a new item by clicking the button</p>
-      </section>
     </section>
+    <section
+        v-if="todoItems.length === 0"
+        class="w-full text-gray-600 max-w-screen-md flex flex-col items-center justify-center text-center min-h-screen-nav"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+        </svg>
+        <h1 class="font-bold text-xl">
+          Hears! this is a bit empty
+        </h1>
+        <p class="font-light">Why don't we add something to give an air of life around here?</p>
+      </section>
   </main>
 </template>
 
@@ -39,13 +45,16 @@ export default {
     };
   },
   mounted() {
-    this.todoItems = JSON.parse(localStorage.getItem("todoItems")) || [{
+    this.getLocalStorage();
+  },
+  methods: {
+    getLocalStorage() {
+      this.todoItems = JSON.parse(localStorage.getItem("todoItems")) || [{
           title: "",
           description: "",
           done: false,
         }];
-  },
-  methods: {
+    },
     newItem() {
       this.todoItems.push({
         title: "",

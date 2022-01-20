@@ -5,6 +5,15 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        averia: ["Averia Sans Libre", 'sans-serif'],
+      },
+      minHeight: {
+        'screen-nav': 'var(--screen-nav)',
+      },
+      maxHeight: {
+        'screen-nav': 'var(--screen-nav)',
+      },
     },
   },
   plugins: [],
