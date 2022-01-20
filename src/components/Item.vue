@@ -13,11 +13,11 @@
         placeholder="Write your title here"
       />
       <textarea
-        @input="$emit('contentChange', { index, title, description, done })"
+        v-model="description"
         class="text-sm placeholder-gray-500 font-normal text-gray-700 bg-transparent outline-none w-full"
         placeholder="Write your description here"
         contenteditable="true"
-      />
+      ></textarea>
     </div>
     <div class="flex space-x-2 px-4 h-full text-gray-700 overflow-hidden group-hover:w-0">
         <span class="cursor-pointer transition-all duration-300 ease-in-out hover:text-white rounded-md p-2" :class="{ 'hover:bg-green-600':!done, 'hover:bg-yellow-500': done }" @click="toggleDone">
@@ -49,7 +49,7 @@ export default {
         done: false,
       }),
     },
-    key: {
+    itemIndex: {
       type: Number,
       default: 0,
     },
@@ -73,14 +73,14 @@ export default {
       done = this.done,
     }) {
       this.$emit("contentChange", {
-        index: this.key,
+        index: this.itemIndex,
         title,
         description,
         done,
       });
     },
     deleteItem() {
-        window.confirm("Are you sure you want to delete this item?") && this.$emit("deleteItem", this.key);
+        window.confirm("Are you sure you want to delete this item?") && this.$emit("deleteItem", this.itemIndex);
     },
     toggleDone() {
       this.done = !this.done;
